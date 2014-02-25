@@ -1,0 +1,8 @@
+#file-msg {
+	margin: 1em auto;
+	width: 50%;
+	padding: 1em;
+	font-weight: strong;
+	border: 2px green dashed;
+	display: none;
+}

@@ -1,3 +1,6 @@
+import sys
+import json
+
 def ap(s):
 	return s + "\n" 
 
@@ -8,7 +11,7 @@ def create_input_file(data):
 	#Header info
 	o += ap("!FDMNES input file")
 	o += ap("!Generated automatically via Python")
-	o += ap(data["title_line"])
+	o += ap("!" + data["title_line"] + ".inp")
 
 	#Output file
 	o += ap("Filout")
@@ -45,20 +48,26 @@ def create_input_file(data):
 if __name__ == "__main__":
 
 	#Data setup
-	data = {}
+	# data = {}
 	
-	data["title_line"] = "!Cu K-Edge"
-	data["outfile"] = "outfile.txt"
-	data["range"] = "-10. 0.2 0. 0.5 10. 1. 40."
-	data["radius"] = "3.0"
+	# data["title_line"] = "!Cu K-Edge"
+	# data["outfile"] = "outfile.txt"
+	# data["range"] = "-10. 0.2 0. 0.5 10. 1. 40."
+	# data["radius"] = "3.0"
 
-	data["atoms"] = []
-	data["atoms"].append("29 0.0 0.0 0.0")
-	data["atoms"].append("29 0.5 0.5 0.0")
-	data["atoms"].append("29 0.0 0.5 0.5")
-	data["atoms"].append("29 0.5 0.0 0.5")
+	# data["atoms"] = []
+	# data["atoms"].append("29 0.0 0.0 0.0")
+	# data["atoms"].append("29 0.5 0.5 0.0")
+	# data["atoms"].append("29 0.0 0.5 0.5")
+	# data["atoms"].append("29 0.5 0.0 0.5")
 
-	data["crystal_dim"] = "3.610 3.610 3.610 90. 90. 90."
-	data["fermi_energy"] = "-6."
+	# data["crystal_dim"] = "3.610 3.610 3.610 90. 90. 90."
+	# data["fermi_energy"] = "-6."
 
-	print create_input_file(data)
+	args = sys.argv[1]
+	data = json.loads(args)
+
+	inpfile = create_input_file(data)
+	f = open("inp/" + data["title_line"] + ".inp", "w")
+	f.write(inpfile)
+	f.close()

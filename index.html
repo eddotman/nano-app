@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+	<head>
+
+	<title>FDMNES Web Application</title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/styles.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		
+		<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+
+		<div class="jumbotron text-center">
+		<h1>FDMNES Web Application</h1>
+		</div>
+
+		<div class="container">
+			<h1>Create an FDMNES Input File</h1>
+			<hr>
+			<form id="input-file-form" role="form">
+				<div class="form-group">
+			    <label for="title">File Title</label>
+			    <input type="text" class="form-control" id="title" placeholder="File title (e.g. Cu K Edge)">
+			  </div>
+			  <div class="form-group">
+			    <label for="outfile">Output File Name</label>
+			    <input type="text" class="form-control" id="outfile" placeholder="Output filename (e.g. myfile.txt)">
+			  </div>
+			  <div class="form-group">
+			    <label for="range">Data Range</label>
+			    <input type="text" class="form-control" id="range" placeholder="Data range (e.g. -10. 0.2 0. 0.5 10. 1. 40.)">
+			  </div>
+			  <div class="form-group">
+			    <label for="radius">Radius of Computation</label>
+			    <input type="text" class="form-control" id="radius" placeholder="Radius (e.g. 3.0)">
+			  </div>
+			  <div class="form-group">
+			    <label for="crystal">Crystal Dimensions</label>
+			    <input type="text" class="form-control" id="crystal" placeholder="Crystal dimensions (e.g. 3.610 3.610 3.610 90. 90. 90.)">
+			  </div>
+			  <div class="form-group">
+			    <label for="atoms">Atoms</label>
+			    <div id="atoms-input">
+			    	<input type="text" class="form-control" id="atoms0" placeholder="Atom info (e.g. 29 0 0 0)">
+			    </div>
+			    <span class="help-block"><button id="add-atom" class="btn btn-default btn-xs">Add another atom</button></span>
+			  </div>
+			  <div class="form-group">
+			    <label for="efermi">Fermi Energy</label>
+			    <input type="text" class="form-control" id="efermi" placeholder="Fermi Energy (e.g. -6.0)">
+			  </div>
+			  <div class="btn-group">
+			    <button id="submit-input-file" class="btn btn-success">Create Input File</button>
+			    <button id="reset-input-file" class="btn btn-default">Reset Form</button>
+			  </div>
+			</form>
+
+			<div id="file-msg">
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<p class="text-center">Created for NANO 4920 in 2014 by Edward Kim</p>
+			</div>
+			<br>
+		</div>
+
+		<script>
+			$(document).ready(function(){
+
+				var i=1;
+
+				$("#add-atom").click(function(e){
+					e.preventDefault();
+					$("#atoms-input").append(
+						'<input type="text" class="form-control" id="atoms'+i+'" placeholder="Atom info (e.g. 29 0 0 0)">'
+						);
+					i++;
+				});
+
+				$("#reset-input-file").click(function(e){
+					e.preventDefault();
+					$("#file-msg").hide();
+					$('#input-file-form *').filter(':input').each(function(){
+					    $(this).val("");
+					});
+				});
+
+				$("#submit-input-file").click(function(e){
+					e.preventDefault();
+
+					//Get all atoms
+					var atoms = [];
+					for (var x = 0; x < i; x++) {
+						atoms.push($("#atoms"+x).val());
+					}
+
+					$.ajax({
+					  type: "POST",
+					  url: "input-file.php",
+					  data: { 
+					  	title: $("#title").val(),
+					  	outfile: $("#outfile").val(),
+					  	range: $("#range").val(),
+					  	radius: $("#radius").val(),
+					  	crystal: $("#crystal").val(),
+					  	atom: atoms,
+					  	efermi: $("#efermi").val()
+
+					  }
+					})
+					  .done(function(dat) {
+					    $("#file-msg").html('<p class="text-center">Download your input file <a target="_blank" href="' + dat + '"> here</a></p>');
+					    $("#file-msg").show();
+					  });
+				});
+
+			});
+		</script>
+	</body>
+</html>
