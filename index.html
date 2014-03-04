@@ -12,6 +12,8 @@
 		
 		<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="js/Three49custom.js"></script>
+		<script type="text/javascript" src="js/GLmol.js"></script>
 
 	</head>
 	<body>
@@ -25,34 +27,61 @@
 			<hr>
 			<form id="input-file-form" role="form">
 				<div class="form-group">
-			    <label for="title">File Title</label>
+			    <label for="title">
+			    	File Title
+			    	<button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Title of the to-be-generated input file.">?</button>
+		    	</label>
 			    <input type="text" class="form-control" id="title" placeholder="File title (e.g. Cu K Edge)">
 			  </div>
 			  <div class="form-group">
-			    <label for="outfile">Output File Name</label>
+			    <label for="outfile">
+			    	Output File Name 
+			    	<button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="File is saved to this filename.">?</button>
+					</label>
 			    <input type="text" class="form-control" id="outfile" placeholder="Output filename (e.g. myfile.txt)">
 			  </div>
+  					
 			  <div class="form-group">
-			    <label for="range">Data Range</label>
+			    <label for="range">
+				    Data Range
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Minimum energy, energy step, intermediate energy, energy step, ..., maximum energy. (Units in eV)">?</button>
+			    </label>
 			    <input type="text" class="form-control" id="range" placeholder="Data range (e.g. -10. 0.2 0. 0.5 10. 1. 40.)">
 			  </div>
 			  <div class="form-group">
-			    <label for="radius">Radius of Computation</label>
+			    <label for="radius">
+				    Radius of Computation
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Maximum radius (from central atom) for computing.">?</button>
+			    </label>
 			    <input type="text" class="form-control" id="radius" placeholder="Radius (e.g. 3.0)">
 			  </div>
 			  <div class="form-group">
-			    <label for="crystal">Crystal Dimensions</label>
+			    <label for="crystal">
+				    Crystal Dimensions
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Input lattice vector magnitudes, a b c (Angstroms), and lattice angles, alpha beta gamma (degrees).">?</button>
+			    </label>
 			    <input type="text" class="form-control" id="crystal" placeholder="Crystal dimensions (e.g. 3.610 3.610 3.610 90. 90. 90.)">
 			  </div>
 			  <div class="form-group">
-			    <label for="atoms">Atoms</label>
+			    <label for="atoms">
+				    Atoms
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Z (atomic number), followed by crystal coordinates for each atom.">?</button>
+			    </label>
 			    <div id="atoms-input">
 			    	<input type="text" class="form-control" id="atoms0" placeholder="Atom info (e.g. 29 0 0 0)">
 			    </div>
-			    <span class="help-block"><button id="add-atom" class="btn btn-default btn-xs">Add another atom</button></span>
+			    <span class="help-block">
+			    	<div class="btn-group">
+			    		<button id="add-atom" class="btn btn-default btn-xs">Add another atom</button>
+			    		<button id="view-atom" class="btn btn-default btn-xs" data-toggle="modal" data-target="#atomModal" >View atoms</button>
+			    	</div>
+			    </span>
 			  </div>
 			  <div class="form-group">
-			    <label for="efermi">Fermi Energy</label>
+			    <label for="efermi">
+				    Fermi Energy
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">?</button>
+			    </label>
 			    <input type="text" class="form-control" id="efermi" placeholder="Fermi Energy (e.g. -6.0)">
 			  </div>
 			  <div class="btn-group">
@@ -66,6 +95,62 @@
 
 			<hr>
 
+			<div class="modal fade" id="atomModal" tabindex="-1" role="dialog" aria-labelledby="atomModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">3D Rendering of Atoms</h4>
+			      </div>
+			      <div class="modal-body">
+			      	<div id="glmol02" style="margin:0 auto;width: 500px; height: 400px;"></div> <textarea id="glmol02_src" style="display: none;">
+							HETATM    1  C                  -3.450  -0.135   0.363
+							HETATM    2  C                  -2.116  -0.033  -0.019
+							HETATM    3  C                  -1.805   0.087  -1.347
+							HETATM    4  C                  -2.806   0.106  -2.304
+							HETATM    5  C                  -4.116   0.005  -1.917
+							HETATM    6  C                  -4.463  -0.118  -0.575
+							HETATM    7  I                  -3.911  -0.321   2.435
+							HETATM    8  H                  -1.346  -0.049   0.721
+							HETATM    9  O                  -0.495   0.197  -1.832
+							HETATM   10  H                  -2.532   0.201  -3.333
+							HETATM   11  H                  -4.910   0.017  -2.633
+							HETATM   12  O                  -5.799  -0.212  -0.300
+							HETATM   13  C                   0.605   0.190  -1.001
+							HETATM   14  C                   2.873   0.179   0.629
+							HETATM   15  C                   2.242   1.367   0.305
+							HETATM   16  C                   1.117   1.375  -0.504
+							HETATM   17  C                   1.244  -1.002  -0.684
+							HETATM   18  C                   2.366  -1.011   0.121
+							HETATM   19  C                   4.099   0.189   1.522
+							HETATM   20  H                   2.619   2.294   0.684
+							HETATM   21  I                   0.214   3.227  -1.019
+							HETATM   22  I                   0.527  -2.833  -1.490
+							HETATM   23  H                   2.873  -1.924   0.340
+							HETATM   24  H                  -6.001  -0.299   0.639
+							HETATM   25  H                   3.926  -0.412   2.407
+							HETATM   26  H                   4.290   1.203   1.851
+							HETATM   27  C                   5.361  -0.378   0.815
+							HETATM   28  C                   6.589   0.047   1.611
+							HETATM   29  H                   5.421   0.038  -0.183
+							HETATM   30  N                   5.273  -1.832   0.729
+							HETATM   31  O                   6.865   1.378   1.588
+							HETATM   32  O                   7.254  -0.704   2.264
+							HETATM   33  H                   6.356   1.896   0.955
+							HETATM   34  H                   5.561  -2.266   1.590
+							HETATM   35  H                   5.779  -2.220  -0.046
+							END
+							</textarea>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<hr>
+
 			<div class="row">
 				<p class="text-center">Created for NANO 4920 in 2014 by Edward Kim</p>
 			</div>
@@ -74,6 +159,28 @@
 
 		<script>
 			$(document).ready(function(){
+
+				var glmol02 = new GLmol('glmol02');
+				var elems = {};
+
+				$("#view-atom").click(function(e){
+					e.preventDefault();
+				});
+
+				$.getJSON("js/elements.json", function(json) {
+				   elems = json;
+				});
+
+				function numToEl(num){   
+						for (atom in elems) {
+							if (elems[atom].atomic_number == num) {
+								return json[atom].symbol;
+							}
+						}
+						return -1;		
+				}
+
+				$(".popover-btn").popover();
 
 				var i=1;
 
