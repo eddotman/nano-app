@@ -1,0 +1,26 @@
+! Indata file for FDMNES
+
+ Comment
+ Ti K edge in rutile, using FLAPW potential
+
+ Filout
+xanout/test_stand/tio2_lapw
+
+ Range
+  8. 1. 20. 2. 40.
+
+ Radius
+  3.0
+
+ Trace
+ 1 1. 1. 0. 0. 0. 0.
+
+  Flapw
+entree/test_stand/tio2.struct
+entree/test_stand/tio2.vcoul
+entree/test_stand/tio2.r2v
+entree/test_stand/tio2.clmsum
+entree/test_stand/tio2.ti1s
+
+ End
+

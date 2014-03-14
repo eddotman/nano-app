@@ -1,0 +1,217 @@
+                    List of corrections and modifications
+
+8 January 2007
+   
+- For 1 year, for the 4f elements, the screening was by default on the 5d, 
+  it is now again by default on the 4f.
+--> This can modify the results comparing with previous version
+
+- Better output in bav file to get the atomic electronic configurations.
+
+10 January 2007
+
+- Anormal memory increase under MPI on some compiler corrected (by R. Wilcke)
+- Bad initialisation of naltm parameter corrected (previously could stop the program).
+
+15 January 2007
+
+- Bug found and corrected when 2 fold axis along x (or y) and symmetry plane
+ along y=z (or x=z). (Occured just in FDM).
+
+19 January 2007
+
+- Bug found and corrected when symmetry plane along y=z (or x=z) and no symmetry
+ plane for y=0 and z=0 (or x=0 and z=0). (Occured just in FDM).
+
+ 6 February 2007
+
+- Bug found and corrected for the automatic screening in magnetic configuration
+when the non excited electronic configuration is such that there is less than
+ half electron free for one of the spin for the orbital where comes the screening electron
+(very rare situation).
+- Establishment of the groups of equivalent atoms made less memory consuming. Previously
+when the number of non equivalent atoms was to high one got stack overflow.
+
+14 February 2007
+
+- In routine Symsite, declaration of base_orth as logical forgotten previously. Gave problem
+in compilation with some compiler
+
+March-June 2007
+- Many modification the program in order to improve the speed when working in FDM model.
+  Real only with the existance of 3 fold axis and sometimes with 4 fold axis. 
+- Non parallel spin axis are now possible
+- With MPI, results are given continuously during the job and not just at the end.
+- Different bugs were corrected.
+
+July 2007 - March 2008
+- Symmetrization of the multiple scattering calculation (but with spin-orbit).
+- Calculation of negative energy in multiple scattering.
+- Photoemission calculation.
+- Improvement of the MPI.
+
+April 2008
+- sigma polarization defined reverse.
+- azimuth defined anti-clock wise for the rotation of the crystal around the Q axis.
+- Atomic potential calculated more precisely.
+
+May 2008
+- Some bugs corrected
+
+June and July 2008
+- Some other bugs corrected
+
+August 2008 - March 2009
+- Self-consistent calculation included.
+- Some modifications for the evaluation of the muffin-tin radius (in some case values were wrong).
+- The sign of the E1E2 component is changed for DAFS. 
+- There is no more the nesparam.inc file. There is is a new file : scf.f.
+
+May 2009
+One bug corrected in case of punctual symmetry S6.
+
+July 2009 2th
+Some bugs corrected. Convolution slightly modified for XANES.
+
+December 2009
+Bug corrected in the magnetic case with spin-orbit for trigonal symmetry.
+Keyword "scan_conv" created to write the output file name of the scan convoluted file.
+Crossing spin term is now taking into account. This changes very slightly calculations with spin-orbit
+at L23 and M45 edges. (No differences at K edges). 
+
+December 31st 2009
+Bug corrected in Radial Matrix when two edges for E0 and E2 term.
+
+February 1st 2010
+Two minor bugs corrected.
+
+March 22nd 2010
+- Symmetrization in the multiple scattering mode in the spin-orbit case (thus calculations faster).
+- Hubbard correction implemented
+- TDDFT calculation implemented
+- Some Variables not initialized, now initialized (gave error with specific compilers).
+
+May 11th 2010
+- Some bugs corrected in Hubbard and symmetrization in multiple scattering mode.
+
+June 1st 2010
+- One bug coorected and existing from version March 2009: the magnetic E1E2 was not calculated!
+- E1M1 and M1M1 component now calculated.
+
+July 6th 2010
+Some minor bugs corrected.
+
+August 4th 2010
+Correction of a bug for the Wien2k interface when structure is not cubic or tetragonal.
+For Wien2k interface, no more need in general to modify the number of radius point.
+Calculation of energy of core state now relativistic.
+Definition of starting energy for SCF slightly improved.
+
+February 2011
+Relative shift of initial states calculated, including magnetic shift.
+By default, L23 and M45 are now calculated without core-hole.
+By default, broadenings at L2 and L3 have different widths.
+Default atomic radius repaced by the Norman radius when the default is too big or too small. 
+Hubbard correction included.
+TDDFT calculation included with local Kernel.
+
+March 2011
+Minor bugs corrected.
+TDDFT part is by default with spinorbite.
+In LAPW, atomic radius is by default the Norman one.
+
+March 18th 2011
+Minor bugs corrected. Detectable only with specific compilers.
+
+April 30th 2011
+Minor bugs corrected. Default edge width modified for Mn, Sc, V, Ti L23.
+
+May 18th 2011
+Correction bug on reading of keyword "Self-abs".
+
+August 12th 2011
+Some bugs fixed in the "scan" part for RXD.
+
+January 31st 2012
+Birefringence effect included
+Self absorption for RXD improved
+Interstitial potential calculated in a better way.
+One_run option included.
+
+February 2nd 2012
+A bug corrected with spin orbit and imaginary energy.
+
+February 15th 2012
+A bug corrected for calculation TDDFT + self absorption.
+
+February 21th 2012
+One output format correction.
+
+April 8th 2012
+Bug corrected in option "One_run".
+
+April 24th 2012
+Bug corrected when Hubbard + FDM.
+
+May 16th 2012
+Bug corrected when Linux + TDDFT (gave an aleatory error message).
+
+June 7th 2012
+SCF calculated by default with a fixed magnetic polarization.
+Hubbard energy correction included in the total energy.
+
+July 9th 2012
+Optimization of the SCF (better convergence).
+One bug corrected for magnetic RXD calculation (rare occurence).
+
+November 2012
+One bug corrected in case of magnetic calculation using the One_run process.
+Modification of the intersticial potential in order to make the average 
+in area at distance less than 2.5 Angstroem from any atom (useful in some cases for molecules).
+
+April 17th 2013
+Bug corrected when Hubbard + Spinorbite. Density od state calculation improved.
+Minor bugs corrected.
+Note that there is no more the hubbard.f file to compile. (Hubbard staff is included in 
+the other routines.
+
+April 26th 2013
+One bug corrected.
+
+May 3rd 2013
+E3E3 term included.
+
+May 18th 2013
+Speedness of the code improved (vs 2013 version).
+
+May 27th 2013
+Magnetic dipole transition in E1M1 and M1M1 corrected.
+
+September 2013
+Formula corrected for the non resonant magnetic amplitude (error in the Blume formula)
+Bug corrected in the birefringence correction.
+Bug (introduced in May) for m3m symmetry when working with FDM (gave 0!)
+Magnetic dipole transition in E1M1 and M1M1 corrected.
+Reading of pdb file included (Crystal_p)
+Reading of orientation matrix and DAFS reflexions from experimental files (Dafs_exp)
+Keywords Z_absorber and Atom_conf included.
+There is a new file to compile (optic.f)
+
+October 1st 2013
+Bug found for ponctual group with complex representation (as C3, C3h, C4, C4h) with FDM.
+Bug present from May 2013.
+
+October 29th 2013
+Bug found occuring sometimes for self-consistent calculations in parallel mode.
+
+November 15th 2013
+Bug found in case of Perdew-Zang exchange-correlation potential.
+
+December 10th 2013
+Bulk center case now included for potential coming from Wien2k.
+
+December 12th 2013
+A bug found in the "CXY" for data from Wien2k.
+
+
+  

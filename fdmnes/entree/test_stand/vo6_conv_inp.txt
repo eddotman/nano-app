@@ -1,0 +1,22 @@
+! Main indata file for fdmnes
+! Convolution part of the calculation done on VO6 in a previous step.
+
+ Calculation
+   xanout/test_stand/vo6.txt
+  
+ Convolution
+
+ EFermi            ! To change the Fermi level (or energy of the first non occupied state)
+ -3.5
+
+ Estart            ! To get the convoluted spectra starting at lower energy
+ -15.
+
+ Gamma_max         ! To change the broadening width
+  7.
+
+ Conv_out          ! To specify an output file name
+   xanout/test_stand/vo6_Ef35_GM7_conv.txt
+
+ End
+

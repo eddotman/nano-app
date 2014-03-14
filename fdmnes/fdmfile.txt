@@ -1,0 +1,33 @@
+! General indata file for FDMNES
+! with indata files examples
+
+  1
+entree/test_stand/cu_inp.txt
+
+entree/test_stand/vo6_inp.txt
+entree/test_stand/vo6_conv_inp.txt
+entree/test_stand/vo6_nodipole_inp.txt
+entree/test_stand/feo6_inp.txt
+entree/test_stand/ni_inp.txt
+entree/test_stand/ni_mg_inp.txt
+entree/test_stand/v2o3_inp.txt
+entree/test_stand/gan_inp.txt
+entree/test_stand/fe3o4_inp.txt
+entree/test_stand/fe3o4_dd_inp.txt
+entree/test_stand/cr_inp.txt
+entree/test_stand/cr_conv_inp.txt
+entree/test_stand/ba2znuo6_inp.txt
+entree/test_stand/ca3co2o6_inp.txt
+entree/test_stand/fe2o3_inp.txt
+entree/test_stand/fe2o3_selec_inp.txt
+entree/test_stand/fe2o3_scf_inp.txt
+entree/test_stand/fe2o3_hub_inp.txt
+entree/test_stand/fe_bio_inp.txt
+entree/test_stand/ndmg_inp.txt
+entree/test_stand/pt13_inp.txt
+entree/test_stand/mult_inp.txt
+entree/test_stand/cuo_inp.txt
+entree/test_stand/vo6_tddft_inp.txt
+entree/test_stand/tio2_lapw_inp.txt
+entree/test_stand/z_ndmg_a_mg_inp.txt
+entree/test_stand/z_ndmg_a_so_inp.txt
