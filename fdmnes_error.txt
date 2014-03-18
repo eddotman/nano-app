@@ -1,0 +1,17 @@
+   FDMNES II program, Revision 12 December 2013   
+   Date = 16 03 2014                              
+   Time = 17 h 40 mn 58 s                         
+
+
+ Error opening the file:
+
+   fdmfile.txt
+
+          Status =    2
+
+          It does not exist or 
+          it is not in the good directory or
+          there is some bad spelling or
+          the line contains tabulations or any extra hidden character !
+
+

@@ -1,0 +1,55 @@
+! FDMNES indata file.
+! Calculation of the xanes and RXS spectra in magnetite extracting the tensorial scattering
+! component already calculated in a previous step.
+! Calculation contains the E1-E1 and E2-E2 components but not the E1-E2 one.
+
+ Comment
+   Iron K edge in magnetite, high temperature, without E1-E2
+
+ Filout
+xanout/test_stand/fe3o4_dd
+
+ Extract
+xanout/test_stand/fe3o4_bav.txt
+
+
+ Range
+ -12. 0.1 -6. 0.2 -2.  0.5 20. 1. 30. 2. 60. 4. 100.    		  
+
+ Green
+ quadrupole
+ nodipquad
+
+ Radius
+  3.0
+
+ Self_abs
+ Double_cor
+
+ Rxs
+  0 0 2 1 1 45.
+  0 0 6 1 1 45.
+  4 4 4 1 1  0.
+
+ Atom
+  26 3  3 2 5.5  4 0 2.  4 1 0.5 
+   8 0
+
+ Spgroup
+  227:1
+
+ Crystal
+  8.3940   8.3940   8.3940 90.0000   90.0000   90.0000   
+  1      .6250      .6250      .6250    ! Fe 16d           
+  1      .0000      .0000      .0000    ! Fe  8a
+  2      .3800      .3800      .3800    ! O  32e
+
+ Convolution
+
+ Estart
+  -50.
+
+ End
+
+ 
+

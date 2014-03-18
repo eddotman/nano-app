@@ -6,6 +6,7 @@
 
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/nv.d3.min.css">
 		<link rel="stylesheet" href="css/styles.css">
 
 		<!-- Latest compiled and minified JavaScript -->
@@ -14,6 +15,8 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		<script src="js/Three49custom.js"></script>
 		<script type="text/javascript" src="js/GLmol.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/nv.d3.min.js"></script>
 
 	</head>
 	<body>
@@ -68,19 +71,19 @@
 				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Z (atomic number), followed by crystal coordinates for each atom.">?</button>
 			    </label>
 			    <div id="atoms-input">
-			    	<input type="text" class="form-control" id="atoms0" placeholder="Atom info (e.g. 29 0 0 0)">
+			    	<input type="text" class="form-control" id="atoms0" placeholder="Atom info (e.g. 29 1.0 -1.0 2.0)">
 			    </div>
 			    <span class="help-block">
 			    	<div class="btn-group">
 			    		<button id="add-atom" class="btn btn-default btn-xs">Add another atom</button>
-			    		<button id="view-atom" class="btn btn-default btn-xs" data-toggle="modal" data-target="#atomModal" >View atoms</button>
+			    		<button id="view-atom" class="btn btn-default btn-xs"   data-toggle="modal" data-target="#atomModal">View atoms</button>
 			    	</div>
 			    </span>
 			  </div>
 			  <div class="form-group">
 			    <label for="efermi">
 				    Fermi Energy
-				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">?</button>
+				    <button type="button" class="btn btn-xs btn-default popover-btn" data-container="body" data-toggle="popover" data-content="The Fermi energy in eV">?</button>
 			    </label>
 			    <input type="text" class="form-control" id="efermi" placeholder="Fermi Energy (e.g. -6.0)">
 			  </div>
@@ -93,8 +96,6 @@
 			<div id="file-msg">
 			</div>
 
-			<hr>
-
 			<div class="modal fade" id="atomModal" tabindex="-1" role="dialog" aria-labelledby="atomModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -103,50 +104,42 @@
 			        <h4 class="modal-title" id="myModalLabel">3D Rendering of Atoms</h4>
 			      </div>
 			      <div class="modal-body">
-			      	<div id="glmol02" style="margin:0 auto;width: 500px; height: 400px;"></div> <textarea id="glmol02_src" style="display: none;">
-							HETATM    1  C                  -3.450  -0.135   0.363
-							HETATM    2  C                  -2.116  -0.033  -0.019
-							HETATM    3  C                  -1.805   0.087  -1.347
-							HETATM    4  C                  -2.806   0.106  -2.304
-							HETATM    5  C                  -4.116   0.005  -1.917
-							HETATM    6  C                  -4.463  -0.118  -0.575
-							HETATM    7  I                  -3.911  -0.321   2.435
-							HETATM    8  H                  -1.346  -0.049   0.721
-							HETATM    9  O                  -0.495   0.197  -1.832
-							HETATM   10  H                  -2.532   0.201  -3.333
-							HETATM   11  H                  -4.910   0.017  -2.633
-							HETATM   12  O                  -5.799  -0.212  -0.300
-							HETATM   13  C                   0.605   0.190  -1.001
-							HETATM   14  C                   2.873   0.179   0.629
-							HETATM   15  C                   2.242   1.367   0.305
-							HETATM   16  C                   1.117   1.375  -0.504
-							HETATM   17  C                   1.244  -1.002  -0.684
-							HETATM   18  C                   2.366  -1.011   0.121
-							HETATM   19  C                   4.099   0.189   1.522
-							HETATM   20  H                   2.619   2.294   0.684
-							HETATM   21  I                   0.214   3.227  -1.019
-							HETATM   22  I                   0.527  -2.833  -1.490
-							HETATM   23  H                   2.873  -1.924   0.340
-							HETATM   24  H                  -6.001  -0.299   0.639
-							HETATM   25  H                   3.926  -0.412   2.407
-							HETATM   26  H                   4.290   1.203   1.851
-							HETATM   27  C                   5.361  -0.378   0.815
-							HETATM   28  C                   6.589   0.047   1.611
-							HETATM   29  H                   5.421   0.038  -0.183
-							HETATM   30  N                   5.273  -1.832   0.729
-							HETATM   31  O                   6.865   1.378   1.588
-							HETATM   32  O                   7.254  -0.704   2.264
-							HETATM   33  H                   6.356   1.896   0.955
-							HETATM   34  H                   5.561  -2.266   1.590
-							HETATM   35  H                   5.779  -2.220  -0.046
-							END
+			      	<div id="glmol02" style="margin:0 auto;width: 500px; height: 400px;"></div> <textarea style="display:none;" id="glmol02_src">
 							</textarea>
 			      </div>
-			      <div class="modal-footer">
+			     <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      </div>
 			    </div>
 			  </div>
+			</div>
+
+			<div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="graphModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">XANES Computation</h4>
+			      </div>
+			      <div class="modal-body">
+							<div id="chart" style="height:300px;width:500px;"><svg style="height:300px;width:500px;"></svg></div>
+			      </div>
+			     <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<hr>
+
+			<h1>Compute with FDMNES</h1>
+
+			<textarea readonly id="compute-output"></textarea>
+
+			<div class="btn-group">
+				<button class="btn btn-success" id="compute">Compute</button>
+				<button class="btn btn-default" id="view-graph" data-toggle="modal" data-target="#graphModal">View Graph</button>
 			</div>
 
 			<hr>
@@ -160,12 +153,35 @@
 		<script>
 			$(document).ready(function(){
 
-				var glmol02 = new GLmol('glmol02');
 				var elems = {};
 
 				$("#view-atom").click(function(e){
 					e.preventDefault();
+
+					atomString = "";
+
+					//Get all atoms
+					for (var x = 0; x < i; x++) {
+						atomString += "HETATM    " + (x+1) + "  ";
+						var line =  $("#atoms"+x).val().split(" ");
+						atomString += numToEl(line.splice(0, 1)) + "                  ";
+						atomString += line[0] + "  " + line[1] + "   " + line[2];
+						atomString += "\n";
+					}
+
+					atomString += "END";
+
+					console.log(atomString);
+
+					$("#glmol02_src").val(atomString);
+					console.log($("#glmol02_src").val());
+
+					$("#glmol02").html("");
+					var glmol = new GLmol('glmol02');
 				});
+
+
+
 
 				$.getJSON("js/elements.json", function(json) {
 				   elems = json;
@@ -174,7 +190,7 @@
 				function numToEl(num){   
 						for (atom in elems) {
 							if (elems[atom].atomic_number == num) {
-								return json[atom].symbol;
+								return elems[atom].symbol;
 							}
 						}
 						return -1;		
@@ -223,12 +239,123 @@
 
 					  }
 					})
-					  .done(function(dat) {
-					    $("#file-msg").html('<p class="text-center">Download your input file <a target="_blank" href="' + dat + '"> here</a></p>');
-					    $("#file-msg").show();
-					  });
+				  .done(function(dat) {
+				    $("#file-msg").html('<p class="text-center">Download your input file <a target="_blank" href="' + dat + '"> here</a></p>');
+				    $("#file-msg").show();
+				  });
 				});
 
+				$("#compute").click(function(e){
+					e.preventDefault();
+
+					$("#compute-output").val("Computing...");
+
+					$.ajax({
+					  type: "POST",
+					  url: "fdmnes.php"
+					})
+				  .done(function(dat) {
+				    $("#compute-output").val(dat);
+				  });
+				});
+
+				$("#view-graph").click(function(e){
+					e.preventDefault();
+
+					//Chart stuff
+					var chartData = {};
+					var chartContainer = [];
+
+					$.ajax({
+						  type: "POST",
+						  url: "fdmnes_view.php"
+						})
+					  .done(function(dat) {
+					    chartData = JSON.parse(dat);
+					    chartData.forEach(function(thing){
+					    	thing.x = parseFloat(thing.x);
+					    	thing.y = parseFloat(thing.y);
+					    });
+					    console.log(chartData);
+					    chartContainer = [
+								{
+									values: chartData,
+									key: "XANES Computation",
+									color: "#ff7f0e"
+									
+								}
+							];
+
+							console.log(chartContainer);
+
+
+							/*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
+							nv.addGraph(function() {
+							  var chart = nv.models.lineChart()
+							                .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+							                .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+							                .transitionDuration(350)  //how fast do you want the lines to transition?
+							                .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+							                .showYAxis(true)        //Show the y-axis
+							                .showXAxis(true)        //Show the x-axis
+							  ;
+
+							  chart.xAxis     //Chart x-axis settings
+							      .axisLabel('Energy (eV)')
+							      .tickFormat(d3.format('1.f'));
+
+							  chart.yAxis     //Chart y-axis settings
+							      .axisLabel('Absorption (Arb.)')
+							      .tickFormat(d3.format('.02f'));
+
+							  /* Done setting the chart up? Time to render it!*/
+							  var myData = chartContainer;   //You need data...
+							  //console.log(myData);
+
+							  d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.   
+							      .datum(myData)         //Populate the <svg> element with chart data...
+							      .call(chart);          //Finally, render the chart!
+
+							  //Update the chart when window resizes.
+							  nv.utils.windowResize(function() { chart.update() });
+							  return chart;
+							});
+
+					  });
+					
+					function sinAndCos() {
+					  var sin = [],sin2 = [],
+					      cos = [];
+
+					  //Data is represented as an array of {x,y} pairs.
+					  for (var i = 0; i < 100; i++) {
+					    sin.push({x: i, y: Math.sin(i/10)});
+					    sin2.push({x: i, y: Math.sin(i/10) *0.25 + 0.5});
+					    cos.push({x: i, y: .5 * Math.cos(i/10)});
+					  }
+
+					  //Line chart data should be sent as an array of series objects.
+					  return [
+					    {
+					      values: sin,      //values - represents the array of {x,y} data points
+					      key: 'Sine Wave', //key  - the name of the series.
+					      color: '#ff7f0e'  //color - optional: choose your own line color.
+					    },
+					    {
+					      values: cos,
+					      key: 'Cosine Wave',
+					      color: '#2ca02c'
+					    },
+					    {
+					      values: sin2,
+					      key: 'Another sine wave',
+					      color: '#7777ff',
+					      area: true      //area - set to true if you want this line to turn into a filled area chart.
+					    }
+					  ];
+					}
+
+				});
 			});
 		</script>
 	</body>
